@@ -1,0 +1,40 @@
+<div class="page">
+  <app-navbar></app-navbar>
+
+  <main class="dashboard">
+    <div class="dashboard-header">
+      <h1>My Tasks</h1>
+      <p>{{ activeCount }} task{{ activeCount !== 1 ? 's' : '' }} remaining</p>
+    </div>
+
+    <app-task-form (add)="handleAdd($event)"></app-task-form>
+
+    <div class="filter-tabs">
+      <button
+        *ngFor="let f of filters"
+        class="filter-tab"
+        [class.active]="filter === f"
+        (click)="setFilter(f)"
+      >
+        {{ f.charAt(0).toUpperCase() + f.slice(1) }}
+      </button>
+    </div>
+
+    <div class="alert-error" *ngIf="error">{{ error }}</div>
+
+    <p class="empty-state" *ngIf="loading">Loading tasks...</p>
+    <p class="empty-state" *ngIf="!loading && filteredTasks.length === 0">
+      No tasks here yet. Add one above!
+    </p>
+
+    <div class="task-list" *ngIf="!loading && filteredTasks.length > 0">
+      <app-task-item
+        *ngFor="let task of filteredTasks"
+        [task]="task"
+        (toggle)="handleToggle($event)"
+        (update)="handleUpdate($event)"
+        (delete)="handleDelete($event)"
+      ></app-task-item>
+    </div>
+  </main>
+</div>

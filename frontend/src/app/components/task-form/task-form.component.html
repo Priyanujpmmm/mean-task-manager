@@ -1,0 +1,25 @@
+<form class="task-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-row">
+    <input
+      type="text"
+      placeholder="What needs to be done?"
+      formControlName="title"
+      class="input"
+    />
+    <select formControlName="priority" class="input select">
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
+    </select>
+    <input type="date" formControlName="dueDate" class="input" />
+  </div>
+  <textarea
+    placeholder="Add a description (optional)"
+    formControlName="description"
+    class="input textarea"
+    rows="2"
+  ></textarea>
+  <button type="submit" class="btn btn-primary" [disabled]="form.invalid || submitting">
+    {{ submitting ? 'Adding...' : '+ Add Task' }}
+  </button>
+</form>

@@ -1,0 +1,27 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>Create your account</h1>
+    <p class="auth-subtitle">Start organizing your tasks today</p>
+
+    <div class="alert-error" *ngIf="error">{{ error }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <label>Name</label>
+      <input type="text" class="input" formControlName="name" />
+
+      <label>Email</label>
+      <input type="email" class="input" formControlName="email" />
+
+      <label>Password</label>
+      <input type="password" class="input" formControlName="password" />
+
+      <button type="submit" class="btn btn-primary btn-full" [disabled]="form.invalid || loading">
+        {{ loading ? 'Creating account...' : 'Sign Up' }}
+      </button>
+    </form>
+
+    <p class="auth-switch">
+      Already have an account? <a routerLink="/login">Log in</a>
+    </p>
+  </div>
+</div>

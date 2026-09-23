@@ -1,0 +1,24 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>Welcome back</h1>
+    <p class="auth-subtitle">Log in to manage your tasks</p>
+
+    <div class="alert-error" *ngIf="error">{{ error }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <label>Email</label>
+      <input type="email" class="input" formControlName="email" />
+
+      <label>Password</label>
+      <input type="password" class="input" formControlName="password" />
+
+      <button type="submit" class="btn btn-primary btn-full" [disabled]="form.invalid || loading">
+        {{ loading ? 'Logging in...' : 'Log In' }}
+      </button>
+    </form>
+
+    <p class="auth-switch">
+      Don't have an account? <a routerLink="/register">Sign up</a>
+    </p>
+  </div>
+</div>
