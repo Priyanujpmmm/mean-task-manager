@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:5000/api',
+  production: true,
+  apiUrl: 'https://mean-task-manager-tau.vercel.app/api',
 };
