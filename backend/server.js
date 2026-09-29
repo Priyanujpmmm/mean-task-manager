@@ -9,7 +9,14 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:4200' }));
+app.use(cors({
+  origin: [
+    'http://localhost:4200',
+    'https://mean-task-manager-epu2.vercel.app'
+  ],
+  credentials: true
+}));
+
 app.use(express.json());
 
 // Routes
@@ -29,7 +36,9 @@ app.use((req, res) => {
 // Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(err.status || 500).json({ message: err.message || 'Server error' });
+  res.status(err.status || 500).json({
+    message: err.message || 'Server error'
+  });
 });
 
 const PORT = process.env.PORT || 5000;
