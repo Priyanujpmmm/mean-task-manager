@@ -4,20 +4,36 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 
 dotenv.config();
-connectDB();
 
 const app = express();
 
-// Middleware
-app.use(cors({
+// CORS
+const corsOptions = {
   origin: [
     'http://localhost:4200',
     'https://mean-task-manager-epu2.vercel.app'
   ],
-  credentials: true
-}));
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+};
 
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Express 5: use '/{*splat}' instead of '*'
+
+// Body parser
 app.use(express.json());
+
+// Connect to DB per request (serverless-safe)
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error('DB error:', err.message);
+    res.status(500).json({ message: 'Database connection failed' });
+  }
+});
 
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
